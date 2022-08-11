@@ -8,15 +8,21 @@
 import Foundation
 
 struct TaskEntry {
+    let id: Int
     let taskName: String
-    let isCompleted: Bool
-    let isDeleted: Bool
 }
 
 struct Task {
     var tasks: [TaskEntry] = []
+    var completedTasks: [TaskEntry] = []
     
     mutating func addTask(task: String) {
-        tasks.append(TaskEntry(taskName: task, isCompleted: false, isDeleted: false))
+        let id: Int = tasks.count + 1
+        tasks.append(TaskEntry(id: id, taskName: task))
+    }
+    
+    mutating func completeTask(id: Int) {
+        completedTasks.append(tasks[id-1])
+        tasks.remove(at: id - 1)
     }
 }

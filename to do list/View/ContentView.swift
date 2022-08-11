@@ -30,15 +30,40 @@ struct ContentView: View {
             
             Spacer()
             
-            List(task.tasks, id: \.taskName){data in
+            Text("TO DO LIST")
+                .background(Color.gray)
+            
+            List(task.tasks, id: \.id){data in
+                Text(data.taskName)
+                    .swipeActions(allowsFullSwipe: false){
+                        Button(action: {}){
+                            Image(systemName: "trash.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                        }.tint(Color.red)
+                        
+                        Button(action: {
+                            task.completeTask(id: data.id)
+                        }){
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                        }.tint(Color.green)
+                    }
+            }
+            
+            Text("COMPLETED")
+                .background(Color.gray)
+            
+            List(task.completedTasks, id: \.id){data in
                 Text(data.taskName)
             }
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
