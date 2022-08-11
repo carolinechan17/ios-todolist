@@ -25,4 +25,8 @@ struct Task {
         completedTasks.append(tasks[id-1])
         tasks.remove(at: id - 1)
     }
+    
+    mutating func removeTask(id: Int) {
+        tasks.remove(at: id - 1)
+    }
 }

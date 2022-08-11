@@ -36,7 +36,9 @@ struct ContentView: View {
             List(task.tasks, id: \.id){data in
                 Text(data.taskName)
                     .swipeActions(allowsFullSwipe: false){
-                        Button(action: {}){
+                        Button(action: {
+                            task.removeTask(id: data.id)
+                        }){
                             Image(systemName: "trash.circle")
                                 .resizable()
                                 .frame(width: 30, height: 30)
