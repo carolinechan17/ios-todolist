@@ -25,7 +25,21 @@ struct ContentView: View {
                         task in
                         Text(task)
                     }
-                    .onDelete(perform: delete)
+                    .swipeActions {
+                        //MARK: Completed task button
+                        Button {
+                            
+                        } label: {
+                            CompleteButtonView()
+                        }
+                        
+                        //MARK: Delete task button
+                        Button {
+                            
+                        } label: {
+                            
+                        }
+                    }
                     .toolbar {
                         Button {
                             tasks.append("newtask")
@@ -63,6 +77,10 @@ struct ContentView: View {
 
 extension ContentView {
     func delete(indexSet: IndexSet) {
+        tasks.remove(atOffsets: indexSet)
+    }
+    
+    func complete(indexSet: IndexSet) {
         tasks.remove(atOffsets: indexSet)
     }
 }

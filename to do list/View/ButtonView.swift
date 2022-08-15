@@ -11,7 +11,17 @@ struct AddButtonView: View {
     var body: some View {
         Image(systemName: "plus.circle")
             .resizable()
-            .frame(width: 30, height: 30)    }
+            .frame(width: 30, height: 30)
+    }
+}
+
+struct CompleteButtonView: View {
+    var body: some View {
+        Image(systemName: "checkmark.circle")
+            .resizable()
+            .frame(width: 30, height: 30)
+            .tint(Color.green)
+    }
 }
 
 struct ButtonView_Previews: PreviewProvider {
