@@ -8,44 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var taskName: String = ""
-    @State private var task = Task()
+    @State private var tasks : [String] = ["task", "task", "task"]
     
     var body: some View {
-        VStack{
-            HStack{
-                TextField("Enter new task", text: $taskName)
-                
-                Spacer()
-                
-                Button(action: {
-                    task.addTask(task: taskName)
-                }){
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                }
-            }
-            .padding()
-            
-            Spacer()
-            
-            Text("TO DO LIST")
-                .background(Color.gray)
-            
-            List(task.tasks, id: \.id){data in
-                Text(data.taskName)
-                    .swipeActions(allowsFullSwipe: false){
-                        DeleteButtonView(id: data.id)
-                        CompleteButtonView(id: data.id)
+        NavigationView {
+            List {
+                Section(header: Text("Tasks to do")) {
+                    ForEach(tasks, id: \.self){
+                        task in
+                        Text(task)
                     }
-            }
-            
-            Text("COMPLETED")
-                .background(Color.gray)
-            
-            List(task.completedTasks, id: \.id){data in
-                Text(data.taskName)
+                    .onDelete(perform: delete)
+                    .
+                }
             }
         }
     }
@@ -54,5 +29,11 @@ struct ContentView: View {
         static var previews: some View {
             ContentView()
         }
+    }
+}
+
+extension ContentView {
+    func delete(indexSet: IndexSet) {
+        tasks.remove(atOffsets: indexSet)
     }
 }
