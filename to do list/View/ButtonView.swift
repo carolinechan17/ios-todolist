@@ -24,6 +24,15 @@ struct CompleteButtonView: View {
     }
 }
 
+struct DeleteButtonView: View {
+    var body: some View {
+        Image(systemName: "trash.circle")
+            .resizable()
+            .frame(width: 30, height: 30)
+            .tint(Color.red)
+    }
+}
+
 struct ButtonView_Previews: PreviewProvider {
     static var previews: some View {
         AddButtonView()
