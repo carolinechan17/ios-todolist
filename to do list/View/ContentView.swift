@@ -8,20 +8,49 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tasks : [String] = ["task", "task", "task"]
+    @State private var tasks: [String] = ["task", "task", "task"]
+    @State private var completedTasks: [String] = ["completedtask", "completedtask", "completedtask"]
     
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Tasks to do")) {
+                //MARK: 1st section for incompleted task
+                Section(
+                    header:
+                        Text("TO DO")
+                        .font(.system(size: 14))
+                        .fontWeight(.light)
+                ) {
                     ForEach(tasks, id: \.self){
                         task in
                         Text(task)
                     }
                     .onDelete(perform: delete)
-                    .
+                    .toolbar {
+                        Button {
+                            tasks.append("newtask")
+                        } label: {
+                            AddButtonView()
+                        }
+                    }
+                }
+                
+                //MARK: 2nd section for completed task
+                Section(
+                    header:
+                        Text("COMPLETED")
+                        .font(.system(size: 14))
+                        .fontWeight(.light)
+                ) {
+                    ForEach(completedTasks, id: \.self){
+                        task in
+                        Text(task)
+                    }
                 }
             }
+            .listStyle(SidebarListStyle())
+            .navigationTitle("To do lists")
+            .accentColor(Color.red)
         }
     }
     
