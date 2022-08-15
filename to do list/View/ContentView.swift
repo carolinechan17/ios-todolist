@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var tasks: [String] = ["task", "task", "task"]
+    @State private var tasks: [String] = ["task1", "task2", "task3"]
     @State private var completedTasks: [String] = ["completedtask", "completedtask", "completedtask"]
     
     var body: some View {
@@ -25,28 +25,8 @@ struct ContentView: View {
                         task in
                         Text(task)
                     }
-                    .swipeActions {
-                        //MARK: Completed task button
-                        Button {
-                            
-                        } label: {
-                            CompleteButtonView()
-                        }
-                        
-                        //MARK: Delete task button
-                        Button {
-                            
-                        } label: {
-                            
-                        }
-                    }
-                    .toolbar {
-                        Button {
-                            tasks.append("newtask")
-                        } label: {
-                            AddButtonView()
-                        }
-                    }
+                    .onDelete(perform: delete)
+                    .onMove(perform: move)
                 }
                 
                 //MARK: 2nd section for completed task
@@ -62,7 +42,9 @@ struct ContentView: View {
                     }
                 }
             }
-            .listStyle(SidebarListStyle())
+            .toolbar {
+                EditButton()
+            }
             .navigationTitle("To do lists")
             .accentColor(Color.red)
         }
@@ -78,6 +60,10 @@ struct ContentView: View {
 extension ContentView {
     func delete(indexSet: IndexSet) {
         tasks.remove(atOffsets: indexSet)
+    }
+    
+    func move(indices: IndexSet, newOffset: Int) {
+        tasks.move(fromOffsets: indices, toOffset: newOffset)
     }
     
     func complete(indexSet: IndexSet) {
