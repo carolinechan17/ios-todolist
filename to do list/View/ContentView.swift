@@ -10,42 +10,55 @@ import SwiftUI
 struct ContentView: View {
     @State private var tasks: [String] = ["task1", "task2", "task3"]
     @State private var completedTasks: [String] = ["completedtask", "completedtask", "completedtask"]
+    @State private var taskName: String = ""
     
     var body: some View {
         NavigationView {
-            List {
-                //MARK: 1st section for incompleted task
-                Section(
-                    header:
-                        Text("TO DO")
-                        .font(.system(size: 14))
-                        .fontWeight(.light)
-                ) {
-                    ForEach(tasks, id: \.self){
-                        task in
-                        Text(task)
+            VStack {
+                HStack {
+                    TextField("Enter task here", text: $taskName)
+                    
+                    Button(action: {
+                        add(taskName)
+                    }){
+                        Text("Add")
                     }
-                    .onDelete(perform: delete)
-                    .onMove(perform: move)
-                }
-                
-                //MARK: 2nd section for completed task
-                Section(
-                    header:
-                        Text("COMPLETED")
-                        .font(.system(size: 14))
-                        .fontWeight(.light)
-                ) {
-                    ForEach(completedTasks, id: \.self){
-                        task in
-                        Text(task)
+                }.padding(25)
+            
+                List {
+                    //MARK: 1st section for incompleted task
+                    Section(
+                        header:
+                            Text("TO DO")
+                            .font(.system(size: 14))
+                            .fontWeight(.light)
+                    ) {
+                        ForEach(tasks, id: \.self){
+                            task in
+                            Text(task)
+                        }
+                        .onDelete(perform: delete)
+                        .onMove(perform: move)
+                    }
+                    
+                    //MARK: 2nd section for completed task
+                    Section(
+                        header:
+                            Text("COMPLETED")
+                            .font(.system(size: 14))
+                            .fontWeight(.light)
+                    ) {
+                        ForEach(completedTasks, id: \.self){
+                            task in
+                            Text(task)
+                        }
                     }
                 }
+                .toolbar {
+                    EditButton()
+                }
+                .navigationTitle("To do lists")
             }
-            .toolbar {
-                EditButton()
-            }
-            .navigationTitle("To do lists")
             .accentColor(Color.red)
         }
     }
@@ -58,6 +71,10 @@ struct ContentView: View {
 }
 
 extension ContentView {
+    func add(_ taskName: String) {
+        tasks.append(taskName)
+    }
+    
     func delete(indexSet: IndexSet) {
         tasks.remove(atOffsets: indexSet)
     }
